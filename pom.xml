@@ -176,20 +176,20 @@
 			<build>
 				<finalName>cerveja</finalName>
 				<plugins>
-					<plugin>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1.1</version>
-						<configuration>
-							<outputDirectory>webapps</outputDirectory>
-							<warName>ROOT</warName>
-						</configuration>
-					</plugin>
+<!-- 					<plugin> -->
+<!-- 						<artifactId>maven-war-plugin</artifactId> -->
+<!-- 						<version>2.1.1</version> -->
+<!-- 						<configuration> -->
+<!-- 							<outputDirectory>webapps</outputDirectory> -->
+<!-- 							<warName>ROOT</warName> -->
+<!-- 						</configuration> -->
+<!-- 					</plugin> -->
 					<plugin>
 						<groupId>org.springframework.boot</groupId>
 						<artifactId>spring-boot-maven-plugin</artifactId>
-						<configuration>
-							<classifier>boot</classifier>
-						</configuration>
+<!-- 						<configuration> -->
+<!-- 							<classifier>boot</classifier> -->
+<!-- 						</configuration> -->
 					</plugin>
 				</plugins>
 			</build>

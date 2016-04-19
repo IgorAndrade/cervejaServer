@@ -33,6 +33,14 @@
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
 			<id>eap</id>
 			<url>http://maven.repository.redhat.com/techpreview/all</url>
 			<releases>
@@ -175,24 +183,25 @@
 			<id>openshift</id>
 			<build>
 				<finalName>cerveja</finalName>
-				<plugins> 
-<!-- 					<plugin> -->
-<!-- 						<artifactId>maven-war-plugin</artifactId> -->
-<!-- 						<version>2.1.1</version> -->
-<!-- 						<configuration> -->
-<!-- 							<outputDirectory>webapps</outputDirectory> -->
-<!-- 							<warName>ROOT</warName> -->
-<!-- 						</configuration> -->
-<!-- 					</plugin> -->
+				<plugins>
+					<!-- <plugin> -->
+					<!-- <artifactId>maven-war-plugin</artifactId> -->
+					<!-- <version>2.1.1</version> -->
+					<!-- <configuration> -->
+					<!-- <outputDirectory>webapps</outputDirectory> -->
+					<!-- <warName>ROOT</warName> -->
+					<!-- </configuration> -->
+					<!-- </plugin> -->
 					<plugin>
 						<groupId>org.springframework.boot</groupId>
 						<artifactId>spring-boot-maven-plugin</artifactId>
-<!-- 						<configuration> -->
-<!-- 							<classifier>boot</classifier> -->
-<!-- 						</configuration> -->
+						<!-- <configuration> -->
+						<!-- <classifier>boot</classifier> -->
+						<!-- </configuration> -->
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
+
 </project>

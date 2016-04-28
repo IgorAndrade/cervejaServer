@@ -8,6 +8,7 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableAutoConfiguration
 @ComponentScan("br.com.cerveja")
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@EnableJpaRepositories
+@EnableJpaRepositories(basePackages="br.com.cerveja.repository")
 @EnableTransactionManagement
 @EntityScan(basePackages="br.com.cerveja.model")
 public class Application  extends SpringBootServletInitializer{

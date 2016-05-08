@@ -3,13 +3,15 @@ package br.com.cerveja.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import org.springframework.data.rest.core.annotation.RestResource;
 @Entity
+@RestResource(exported = false)
 public class Images {
 	@Id @GeneratedValue
 	private Long id;
 	private String public_id;
 	private String format;
-	private byte[] bytes;
 	private String url;
 	private String secure_url;
 	
@@ -30,12 +32,6 @@ public class Images {
 	}
 	public void setFormat(String format) {
 		this.format = format;
-	}
-	public byte[] getBytes() {
-		return bytes;
-	}
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
 	}
 	public String getUrl() {
 		return url;

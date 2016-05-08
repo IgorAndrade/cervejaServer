@@ -12,12 +12,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.data.rest.core.annotation.RestResource;
+
 import br.com.cerveja.model.Images;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
+@RestResource(exported = false)
 public class Cervejaria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id

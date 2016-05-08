@@ -15,13 +15,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.internal.metadata.facets.Cascadable;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import br.com.cerveja.model.Images;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties(ignoreUnknown=true)
+@RestResource(exported = false)
 public class Cerveja implements Serializable {
 	private static final long serialVersionUID = -2420346134960559062L;
 	@Id
@@ -82,7 +88,7 @@ public class Cerveja implements Serializable {
 	}
 
 	public void setDescription(String description) {
-		if (description.length() > 3900)
+		if (description!=null && description.length() > 3900)
 			this.description = description.substring(0, 3900) + "...";
 		else
 			this.description = description;
@@ -179,9 +185,35 @@ public class Cerveja implements Serializable {
 	public Style getStyle() {
 		return style;
 	}
-
 	public void setStyle(Style style) {
 		this.style = style;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cerveja other = (Cerveja) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	
 
 }

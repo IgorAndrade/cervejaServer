@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('app', ['ui.router','ngRoute','restangular','ngStorage','ngFileUpload','User'])
+angular.module('app', ['ui.router','ui.bootstrap','ngRoute','ngTable','restangular','ngStorage','ngFileUpload','User'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/home');
@@ -34,7 +34,7 @@ angular.module('app', ['ui.router','ngRoute','restangular','ngStorage','ngFileUp
 	      	'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
 	        'content': {
 	          templateUrl: 'views/cervejas/importarCervejas.html',
-	          controller: 'NovoController'
+	          controller: 'CervejaController'
 	        }
 	      } 
 		})
@@ -56,7 +56,11 @@ angular.module('app', ['ui.router','ngRoute','restangular','ngStorage','ngFileUp
 	          templateUrl: 'views/cervejas/Cervejas.html',
 	          controller: 'CervejaController'
 	        }
-	      } 
+	      },
+	      params: {
+	    	  cerveja:null,
+	    	  id:null
+	      }
 		})
 		.state('cerveja:id', {
 	      url: '/cerveja/:id',
@@ -78,9 +82,10 @@ angular.module('app', ['ui.router','ngRoute','restangular','ngStorage','ngFileUp
 
 .config(function(RestangularProvider,$windowProvider) {
 	var window = $windowProvider.$get();
-	RestangularProvider.setBaseUrl("http://"+window.location.host+"/services");
+	 RestangularProvider.setFullResponse(true);
+	RestangularProvider.setBaseUrl("http://"+window.location.host+"/cerveja/service");
     RestangularProvider.setRestangularFields({
-        id: '_id'
+        id: 'id'
       });
     })
 

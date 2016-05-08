@@ -14,9 +14,9 @@ import br.com.cerveja.model.cerveja.Cerveja;
 public interface CervejaRepository extends JpaRepository<Cerveja, Long> {
 	
 	
-	@Query("from Cerveja c join c.cervejaria cervejaria where c.name like %:q% or cervejaria.name like %:q%")
+	@Query("select c from Cerveja c join c.cervejaria cervejaria where c.name like %:q% or cervejaria.name like %:q%")
 	Page<Cerveja> pesquisar(@Param("q")String q,Pageable pageable);
-	@Query("from Cerveja c join c.cervejaria cervejaria where c.name like %:q% or cervejaria.name like %:q%")
+	@Query("select c from Cerveja c join c.cervejaria cervejaria where c.name like %:q% or cervejaria.name like %:q%")
 	List<Cerveja> pesquisar(@Param("q")String q);
 	Cerveja findByBrewerydbId(String brewerydbId);
 

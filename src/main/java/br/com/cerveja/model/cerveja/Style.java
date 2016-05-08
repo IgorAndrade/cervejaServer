@@ -10,11 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown=true)
+@RestResource(exported = false)
 public class Style {
 	@Id @GeneratedValue
 	private Long id;

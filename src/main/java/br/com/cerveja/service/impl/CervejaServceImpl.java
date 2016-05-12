@@ -11,14 +11,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.cerveja.controller.Filter;
 import br.com.cerveja.controller.VO.PesquisaCervejaVO;
 import br.com.cerveja.exception.RN;
 import br.com.cerveja.exception.RNException;
 import br.com.cerveja.exception.RNExceptionFactory;
 import br.com.cerveja.model.Images;
 import br.com.cerveja.model.cerveja.Cerveja;
+import br.com.cerveja.model.cerveja.StatusCerveja;
 import br.com.cerveja.repository.cerveja.CervejaRepository;
 import br.com.cerveja.repository.cerveja.ImagesRepository;
 import br.com.cerveja.service.CervejaService;
@@ -132,6 +136,17 @@ public class CervejaServceImpl implements CervejaService {
 	private void removerFile(File file){
 		if(file !=null)
 		file.deleteOnExit();
+	}
+	
+	@Override
+	public Page<Cerveja> listar(String name, String cervejaria,StatusCerveja filterStatus,
+			Pageable pageRequest) {
+		return cervejaRepository.listar(name, cervejaria, filterStatus,pageRequest);
+	}
+	@Override
+	public Page<Cerveja> listar(Filter filter,
+			Pageable pageRequest) {
+		return cervejaRepository.pesquisar(filter,pageRequest);
 	}
 	
 }

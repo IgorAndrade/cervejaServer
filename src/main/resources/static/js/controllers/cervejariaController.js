@@ -63,6 +63,7 @@ angular.module('app').
 				pg:param.page()-1,
 				qtd:param.count()
 			};
+
 			if(param.filter()){
 				for(var f in param.filter())
 					q[f]=param.filter()[f];

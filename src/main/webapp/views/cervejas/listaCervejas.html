@@ -1,20 +1,22 @@
 
 <div class="container" style="margin-top: 65px">
 	<section>
-		<h1>Pesquisa</h1>
+		<h1>Cervejas</h1>
 		<br>
 		
 		<table ng-table="tabela"
 			class="table table-bordered table-striped table-condensed">
 			<tr ng-repeat="row in $data track by row.id">
-				<td data-title="'Nome'" filter="{filterName: 'text'}"
-					ng-click="click(row)">{{row.name}}</td>
-				<td data-title="'Cervejaria'" filter="{filterCervejaria: 'text'}"
-					 ng-click="click(row)">{{row.cervejaria.name}}</td>
-				<td data-title="'Estilo'" filter="{filterEstilo: 'text'}"
-					ng-click="click(row)">{{row.style.name}}</td>
-				<td data-title="'Status'" filter="{filterStatus: 'text'}"
-					ng-click="click(row)">{{row.status}}</td>
+				<td data-title="'Nome'" filter="{cerveja: 'text'}"
+					sortable="'sortCerveja'"
+					ng-click="openCerveja(row)">{{row.name}}</td>
+				<td data-title="'Cervejaria'" filter="{cervejaria: 'text'}"
+					sortable="'sortCervejaria'"
+					 ng-click="openCerveja(row)">{{row.cervejaria.name}}</td>
+				<td data-title="'Estilo'" 
+					ng-click="openCerveja(row)">{{row.style.name}}</td>
+				<td data-title="'Status'" filter="{status: 'select'}" filter-data="listaStatus" 
+					ng-click="openCerveja(row)">{{row.status}}</td>
 			</tr>
 		</table>
 

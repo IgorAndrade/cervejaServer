@@ -44,7 +44,7 @@ angular.module('app', ['ui.router','ui.bootstrap','ngRoute','ngTable','restangul
 	      	'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
 	        'content': {
 	          templateUrl: 'views/cervejas/listaCervejas.html',
-	          controller: 'NovoController'
+	          controller: 'CervejaController'
 	        }
 	      } 
 		})

@@ -15,7 +15,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class AuthenticationSecurity extends GlobalAuthenticationConfigurerAdapter {
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.inMemoryAuthentication().withUser("adm-ti").password("senha123").roles("ADM-TI");
+//	    auth.inMemoryAuthentication().withUser("adm-ti").password("senha123").roles("ADM-TI");
+//	    auth.inMemoryAuthentication().withUser("adm").password("senha").roles("ADM");
 	}
     }
 

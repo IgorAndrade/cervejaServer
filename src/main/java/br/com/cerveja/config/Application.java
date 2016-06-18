@@ -15,6 +15,9 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 
@@ -24,7 +27,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableJpaRepositories(basePackages="br.com.cerveja.repository")
 @EnableTransactionManagement
 @EntityScan(basePackages="br.com.cerveja.model")
-@PropertySource(value={"classpath:configuration.properties"})
+@PropertySource(value={"classpath:configuration.properties","classpath:erro.properties"})
 public class Application  extends SpringBootServletInitializer{
 	public static void main(String[] args) throws Exception {
 		new SpringApplicationBuilder(Application.class).run(args);
@@ -52,5 +55,15 @@ public class Application  extends SpringBootServletInitializer{
     	Jackson2ObjectMapperBuilder b = new Jackson2ObjectMapperBuilder();
     	b.indentOutput(true).dateFormat(new SimpleDateFormat("dd/MM/yyyy"));
     	return b;
+    }
+    
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:9000");
+            }
+        };
     }
 }

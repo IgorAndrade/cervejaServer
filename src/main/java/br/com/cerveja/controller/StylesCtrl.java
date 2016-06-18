@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.cerveja.model.cerveja.Category;
 import br.com.cerveja.model.cerveja.Style;
+import br.com.cerveja.repository.cerveja.CategoriaRepository;
 import br.com.cerveja.repository.cerveja.StyleRepository;
 
 @RestController
@@ -30,14 +32,16 @@ import br.com.cerveja.repository.cerveja.StyleRepository;
 public class StylesCtrl {
 	@Autowired
 private StyleRepository repo;
+	@Autowired
+	private CategoriaRepository catRepo;
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<?> getAll(@RequestParam(value="pg",defaultValue="0")Integer pg,
 			@RequestParam(value="qtd",defaultValue="10")Integer qtd,
 			@RequestParam(value="filterStyle",required=false,defaultValue="")String filterStyle,
 			@RequestParam(value="orderStyle",required=false)String orderStyle,
-			@RequestParam(value="filterCat",required=false,defaultValue="")String filterCat,
-			@RequestParam(value="orderCat",required=false)String orderCat){
+			@RequestParam(value="categoria",required=false,defaultValue="")String filterCat,
+			@RequestParam(value="orderCategoria",required=false)String orderCat){
 		
 		Pageable pageRequest = null;
 		List<Order> orders = new ArrayList<Sort.Order>();
@@ -60,6 +64,23 @@ private StyleRepository repo;
 		if(pages.getTotalElements()<=0)
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(pages);
+	}
+	@RequestMapping(value="/categoria",method=RequestMethod.GET)
+	public ResponseEntity<?> getCatAll(@RequestParam(value="pg",defaultValue="0")Integer pg,
+			@RequestParam(value="qtd",defaultValue="10")Integer qtd,Filter filter,SortParam sort){
+		
+		Pageable pageRequest = null;
+		List<Order> orders = new ArrayList<Sort.Order>();
+		if (sort.getSortCategoria() != null)
+			orders.add(new Order(Direction.fromString(sort.getSortCategoria() ), "name"));
+		else
+			orders.add(new Order(Direction.ASC , "name"));
+			
+		Page<Category> lista = catRepo.pesquisarCat(filter, pageRequest);
+
+		if (lista.getTotalElements() <= 0)
+			return ResponseEntity.notFound().build();
+		return ResponseEntity.ok(lista);
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)

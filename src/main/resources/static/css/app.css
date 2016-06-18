@@ -78,3 +78,6 @@
 .imgPequena{
 	width: 90px;
 }
+.clickrow tr{
+	cursor: pointer;
+}

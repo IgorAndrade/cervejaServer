@@ -3,9 +3,11 @@
 	<section>
 		<h1>Cervejas</h1>
 		<br>
-		
+<div>
+<button ui-sref="cerveja" class="btn btn-default">Novo</button>
+</div>		
 		<table ng-table="tabela"
-			class="table table-bordered table-striped table-condensed">
+			class="table table-bordered table-striped table-condensed clickrow">
 			<tr ng-repeat="row in $data track by row.id">
 				<td data-title="'Nome'" filter="{cerveja: 'text'}"
 					sortable="'sortCerveja'"

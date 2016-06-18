@@ -2,6 +2,7 @@ package br.com.cerveja.model.cerveja;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,7 +23,7 @@ public class Style {
 	private Long id;
 	private String abvMax;
    	private String abvMin;
-   	@ManyToOne(fetch=FetchType.EAGER)
+   	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.MERGE,CascadeType.PERSIST})
    	private Category category;
    	private Date createDate;
    	@Column(length=4000,columnDefinition="varchar(4000)")

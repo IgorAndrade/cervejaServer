@@ -72,6 +72,74 @@ angular.module('app', ['ui.router','ui.bootstrap','ngRoute','ngTable','restangul
 	        }
 	      } 
 		})
+		.state('cervejariasList', {
+			url: '/listarCervejaria',
+			views: {
+				'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
+				'content': {
+					templateUrl: 'views/cervejas/listaCervejarias.html',
+					controller: 'CervejariaController'
+				}
+			} 
+		})
+		.state('cervejaria', {
+			url: '/cervejaria',
+			views: {
+				'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
+				'content': {
+					templateUrl: 'views/cervejas/Cervejarias.html',
+					controller: 'CervejariaController'
+				}
+			},
+			params: {
+				cerveja:null,
+				id:null
+			}
+		})
+		.state('cervejaria:id', {
+			url: '/cervejaria/:id',
+			views: {
+				'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
+				'content': {
+					templateUrl: 'views/cervejas/Cervejarias.html',
+					controller: 'CervejariaController'
+				}
+			} 
+		})
+		.state('styleList', {
+			url: '/listarEstilos',
+			views: {
+				'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
+				'content': {
+					templateUrl: 'views/cervejas/listaStyle.html',
+					controller: 'StyleController'
+				}
+			} 
+		})
+		.state('style', {
+			url: '/Estilo',
+			views: {
+				'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
+				'content': {
+					templateUrl: 'views/cervejas/Style.html',
+					controller: 'StyleController'
+				}
+			},
+			params: {
+				cerveja:null,
+				id:null
+			}
+		})
+		.state('style:id', {
+			url: '/Estilo/:id',
+			views: {
+				'menu':{templateUrl: 'views/diretivas/menuAdm.html'},
+				'content': {
+					templateUrl: 'views/cervejas/Style.html',
+					controller: 'StyleController'
+				}
+			} 
+		})
 })
 .run(function($rootScope){
 	//$rootScope.$on( "$routeChangeStart", function(event, next, current) {

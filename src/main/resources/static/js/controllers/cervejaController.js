@@ -3,34 +3,20 @@
 /* Controllers */
 
 angular.module('app').
-  controller('CervejaController', function ($scope,$state,$stateParams,$q,CervejaModel,Restangular,Upload,NgTableParams) {
+  controller('CervejaController', function ($scope,$state,Restangular,Upload,Tabela,StatusService) {
 
-    $scope.cerveja= new CervejaModel();
-    
+	
 	$scope.salvar = salvarCerveja;
-
+	
 	$scope.pesquisar=pesquisar;
 	
 	$scope.importar = importar;
 	
 	$scope.openCerveja = openCerveja;
 	
-	$scope.tabela = new NgTableParams({
-		count: 10 
-	}, {
-			counts: [5,10,15,20,50],
-			getData: popularListaCerv,
-	        paginationMaxBlocks: 5,
-	        paginationMinBlocks: 2
-		}
-	);
-	$scope.listaStatus=[];
-	Restangular.all("/cerveja/status").getList().then(function(result){
-		var lista = result.data.plain();
-		for(var f in result.data.plain())
-		$scope.listaStatus.push({id:lista[f],title:lista[f]});
-	})
+	$scope.listaStatus=StatusService;
 	
+	$scope.tabela = new Tabela("/cerveja");
 	
     if($state.params && ($state.params.id || $state.params.cerveja)){
     	editar($state.params.id,$state.params.cerveja);
@@ -58,31 +44,6 @@ angular.module('app').
         	);
     };
     
-    function popularListaCerv(param){
-			var q={
-				pg:param.page()-1,
-				qtd:param.count()
-			};
-			if(param.filter()){
-				for(var f in param.filter())
-					q[f]=param.filter()[f];
-			}
-			if(param.sorting()){
-				for(var s in param.sorting())
-					q[s]=param.sorting()[s];
-			}
-			
-			var deferred = $q.defer();
-			Restangular.all("/cerveja").customGET(null,q,null).then( 
-					function(result) {
-						var r = result.data;
-						param.total(r.totalElements);
-						deferred.resolve(r.content);
-					}).catch(function(e){
-						deferred.resolve([]);
-					});
-			return deferred.promise 
-		};
 
     function saveOk(result){
       $state.go("cervejasList");
@@ -91,14 +52,10 @@ angular.module('app').
 
     };
 
-  
-  		
   	function salvarCerveja() {
         if ($scope.cerveja) {
           if($scope.rotulo)
-//            upload(getNameImg("",$scope.cerveja),"cerveja",function(){
               enviarCerveja(upload);
-//            });
           else
         	  enviarCerveja();
                 	  

@@ -43,8 +43,6 @@ public class CervejaServceImpl implements CervejaService {
 	CloudinaryService cloudinaryService;
 	@Autowired
 	RNExceptionFactory rnExceptionFactory;
-	@Autowired
-	ImagesRepository imgRepo;
 	
 
 	@Override
@@ -129,7 +127,6 @@ public class CervejaServceImpl implements CervejaService {
 			return;
 		
 		cloudinaryService.remover(img.getPublic_id());
-		imgRepo.delete(img.getId());
 	}
 	
 	

@@ -13,7 +13,8 @@
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
-		<MaxFileSize>100KB</MaxFileSize>
+	<!--	<MaxFileSize>100KB</MaxFileSize> -->
+	
 	</appender>
 	<logger name="br.com.cerveja" level="DEGUG">
 		<appender-ref ref="FILE" />

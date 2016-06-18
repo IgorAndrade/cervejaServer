@@ -7,7 +7,7 @@
 			<table ng-table="tabela"
 				class="table table-bordered table-striped table-condensed">
 				<tr ng-repeat="row in $data track by row.id">
-					<td data-title="'Nome'" filter="{filterCervejaria: 'text'}"
+					<td data-title="'Nome'" filter="{cervejaria: 'text'}"
 						sortable="'orderCervejaria'" ng-click="click(row)">{{row.name}}</td>
 				</tr>
 			</table>

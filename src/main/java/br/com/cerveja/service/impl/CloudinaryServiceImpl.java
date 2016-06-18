@@ -96,6 +96,9 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 	@Override
 	public void remover(String public_id){
 		try {
+			Images findByPublic_id = repository.findByPublic_Id(public_id);
+			if(findByPublic_id!=null)
+				repository.delete(findByPublic_id);
 			cloudinary.uploader().destroy(public_id, new HashMap<String,String>());
 		} catch (IOException e) {
 			logger.error("Erro ao remover img:"+public_id,e);

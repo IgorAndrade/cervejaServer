@@ -69,6 +69,25 @@ public class CervejaCtrl {
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok(lista);
 	}
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<?> novo(@Valid @RequestBody Cerveja cerveja, Errors erros){
+		try {
+			if (!erros.hasErrors()) {
+				Cerveja salvo = service.salvar(cerveja);
+				return ResponseEntity.ok(salvo);
+			} else {
+				Map<String, String> listaErros = new HashMap<String, String>();
+				for (FieldError ferros : erros.getFieldErrors()) {
+					listaErros.put(ferros.getField(),
+							ferros.getDefaultMessage());
+				}
+				return ResponseEntity.badRequest().body(listaErros);
+			}
+
+		} catch (Exception e) {
+			return ResponseEntity.status(417).body("Erro inesperado");
+		}
+	}
 
 	@RequestMapping(value = "/importar/{id}")
 	public ResponseEntity importar(@PathVariable("id") String id) {

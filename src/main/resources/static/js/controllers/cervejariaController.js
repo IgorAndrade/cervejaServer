@@ -3,17 +3,11 @@
 /* Controllers */
 
 angular.module('app').
-  controller('CervejaController', function ($scope,$state,$stateParams,$q,CervejaModel,Restangular,Upload,NgTableParams) {
+  controller('CervejariaController', function ($scope,$state,$stateParams,$q,CervejaModel,Restangular,Upload,NgTableParams) {
 
-    $scope.cerveja= new CervejaModel();
-    
-	$scope.salvar = salvarCerveja;
+	$scope.salvar = salvarCervejaria;
 
-	$scope.pesquisar=pesquisar;
-	
-	$scope.importar = importar;
-	
-	$scope.openCerveja = openCerveja;
+	$scope.openCervejaria = openCervejaria;
 	
 	$scope.tabela = new NgTableParams({
 		count: 10 
@@ -24,39 +18,27 @@ angular.module('app').
 	        paginationMinBlocks: 2
 		}
 	);
+	
 	$scope.listaStatus=[];
 	Restangular.all("/cerveja/status").getList().then(function(result){
 		var lista = result.data.plain();
-		for(var f in result.data.plain())
+		for(var f in lista)
 		$scope.listaStatus.push({id:lista[f],title:lista[f]});
 	})
 	
 	
-    if($state.params && ($state.params.id || $state.params.cerveja)){
-    	editar($state.params.id,$state.params.cerveja);
+    if($state.params && ($state.params.id)){
+    	editar($state.params.id);
     }
     
-    function editar(id,c){
-    	if(c!=null)
-    		$scope.cerveja= c;
-    	else
-    	Restangular.one("/cerveja",$state.params.id).get().then(function(novaCerveja){
-    		$scope.cerveja= novaCerveja.data;
+    function editar(id){
+    	Restangular.one("/cervejaria",$state.params.id).get().then(function(novaCervejaria){
+    		$scope.cervejaria= novaCervejaria.data;
     	}).catch(function(e){
     		var a = e
     	})
     }
-    	 
-    function pesquisar(){
-    	Restangular.all("/cerveja").customGET("pesquisar",{q:$scope.query}).then(
-    	        function(result){
-    	        	$scope.cervejas=result.data;
-    	        },
-    	        function(error){
-    	        	$scope.cervejas=[];
-    	        }
-        	);
-    };
+    	
     
     function popularListaCerv(param){
 			var q={
@@ -74,7 +56,7 @@ angular.module('app').
 			}
 			
 			var deferred = $q.defer();
-			Restangular.all("/cerveja").customGET(null,q,null).then( 
+			Restangular.all("/cervejaria").customGET(null,q,null).then( 
 					function(result) {
 						var r = result.data;
 						param.total(r.totalElements);
@@ -86,7 +68,7 @@ angular.module('app').
 		};
 
     function saveOk(result){
-      $state.go("cervejasList");
+      $state.go("cervejariasList");
     };
     function saveErro(result){
 
@@ -94,56 +76,37 @@ angular.module('app').
 
   
   		
-  	function salvarCerveja() {
-        if ($scope.cerveja) {
-          if($scope.rotulo)
-//            upload(getNameImg("",$scope.cerveja),"cerveja",function(){
+  	function salvarCervejaria() {
+        if ($scope.cervejaria) {
+          if($scope.images) 
               enviarCerveja(upload);
-//            });
           else
         	  enviarCerveja();
                 	  
         }
     };
 
-    function openCerveja(cerveja){
-    	$state.go("cerveja:id",{id:cerveja.id});
+    function openCervejaria(cervejaria){
+    	$state.go("cervejaria:id",{id:cervejaria.id});
     }
     
-    function importar(cerveja){
-      Restangular.one("/cerveja/importar",cerveja.brewerydbId).get()
-        .then(function(novaCerveja){
-        	openCerveja(novaCerveja.data);
-      }).catch(function(e){
-    	  var a = e;
-      })
-    };
-
-    function getNameImg(prefix,cerveja){
-        return prefix+"_"+cerveja.name.split(" ")[0];
-    };
 
     function enviarCerveja(cb){
     	if(!cb)
     		cb=saveOk;
-      if($scope.cerveja.id){
-    	 $scope.cerveja.put().then(cb,saveErro); 
+      if($scope.cervejaria.id){
+    	 $scope.cervejaria.put().then(cb,saveErro); 
       }else
-        Restangular.all("/cerveja").post($scope.cerveja).then(cb,saveErro);  
+        Restangular.all("/cervejaria").post($scope.cervejaria).then(cb,saveErro);  
     };
 
     function upload(result) {
-      if($scope.rotulo){
-        var dados = {rotulo: $scope.rotulo, 'id': result.data.id};
-        if($scope.garrafa)
-          dados.garrafa=$scope.garrafa
-          if($scope.outros)
-        	  dados.outros=$scope.outros
+      if($scope.images){
+        var dados = {images: $scope.images, 'id': result.data.id};
         Upload.upload({
-            url: 'service/cerveja/upload',
+            url: 'service/cervejaria/upload',
             arrayKey: '',
            data: dados
-           // data: {file: file}
         }).then(saveOk, saveErro);
       }
     };
